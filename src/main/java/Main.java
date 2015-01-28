@@ -20,17 +20,14 @@ public class Main {
         final MovieRepository movies = new MovieRepository();
         final RentalFactory rentalFactory = new RentalFactory(movies);
 
-        // output movie list
-        for (Movie movie : movies.getAllMovies()) {
-            out.print(movie.getNumber() + ": " + movie.getTitle() + "\n");
-        }
+        outputMovieList(movies);
 
         final BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(in));
         out.print("Enter customer name: ");
         String customerName = inputStreamReader.readLine();
+        Customer customer = new Customer(customerName);
 
         out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
-
         final List<Rental> rentals = inputRentals(rentalFactory, inputStreamReader);
 
         double totalAmount = getTotalAmount(rentals);
@@ -47,6 +44,12 @@ public class Main {
         result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points\n";
 
         out.print(result);
+    }
+
+    private void outputMovieList(MovieRepository movies) {
+        for (Movie movie : movies.getAllMovies()) {
+            out.print(movie.getNumber() + ": " + movie.getTitle() + "\n");
+        }
     }
 
     private int getFrequentRenterPoints(List<Rental> rentals) {
