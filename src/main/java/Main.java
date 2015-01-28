@@ -16,11 +16,11 @@ public class Main {
     }
 
     void run() throws IOException {
-        final MovieRepository movieRepo = new MovieRepository();
+        final MovieRepository movies = new MovieRepository();
 
         // output movie list
-        for (int movieNumber = 0; movieNumber < movieRepo.count(); ++movieNumber) {
-            final Movie movie = movieRepo.getMovieBy(movieNumber);
+        for (int movieNumber = 0; movieNumber < movies.count(); ++movieNumber) {
+            final Movie movie = movies.getMovieBy(movieNumber);
             out.print(movieNumber + ": " + movie.getTitle() + "\n");
         }
 
@@ -39,7 +39,7 @@ public class Main {
                 break;
             }
             final Rental rental = Rental.parseFrom(input);
-            final Movie movie = movieRepo.getMovieBy(rental.getMovieNumber());
+            final Movie movie = movies.getMovieBy(rental.getMovieNumber());
             double thisAmount = 0;
 
             //determine amounts for rental

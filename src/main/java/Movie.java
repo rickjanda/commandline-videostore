@@ -16,8 +16,4 @@ public class Movie {
         return type;
     }
 
-    static Movie parseFrom(String line) {
-        final String[] movie = line.split(";");
-        return new Movie(movie[0], movie[1]);
-    }
 }

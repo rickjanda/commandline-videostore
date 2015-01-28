@@ -16,7 +16,8 @@ public class MovieRepository {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
         while (bufferedReader.ready()) {
             final String line = bufferedReader.readLine();
-            final Movie movie = Movie.parseFrom(line);
+            final String[] movie1 = line.split(";");
+            final Movie movie = new Movie(movie1[0], movie1[1]);
             movies.add(movie);
         }
     }
