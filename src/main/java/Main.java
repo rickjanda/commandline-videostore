@@ -33,7 +33,7 @@ public class Main {
         double totalAmount = getTotalAmount(rentals);
         int frequentRenterPoints = getFrequentRenterPoints(rentals);
 
-        String result = "Rental Record for " + customerName + "\n";
+        String result = "Rental Record for " + customer.getName() + "\n";
         for (Rental rental : rentals) {
             // show figures for this rental
             result += "\t" + rental.getMovie().getTitle() + "\t" + rental.calcAmount() + "\n";

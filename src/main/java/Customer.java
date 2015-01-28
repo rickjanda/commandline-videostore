@@ -1,12 +1,12 @@
 public class Customer {
-    private final String customerName;
+    private final String name;
 
-    public Customer(String customerName) {
+    public Customer(String name) {
 
-        this.customerName = customerName;
+        this.name = name;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getName() {
+        return name;
     }
 }
