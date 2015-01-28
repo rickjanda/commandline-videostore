@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.List;
 
 public class Main {
 
@@ -39,24 +38,7 @@ public class Main {
             }
             final Rental rental = Rental.parseFrom(input);
             final Movie movie = movies.getMovieBy(rental.getMovieNumber());
-            double thisAmount = 0;
-
-            //determine amounts for rental
-            switch (movie.getType()) {
-                case "REGULAR":
-                    thisAmount += 2;
-                    if (rental.getDaysRented() > 2)
-                        thisAmount += (rental.getDaysRented() - 2) * 1.5;
-                    break;
-                case "NEW_RELEASE":
-                    thisAmount += rental.getDaysRented() * 3;
-                    break;
-                case "CHILDRENS":
-                    thisAmount += 1.5;
-                    if (rental.getDaysRented() > 3)
-                        thisAmount += (rental.getDaysRented() - 3) * 1.5;
-                    break;
-            }
+            final double thisAmount = rental.calcAmount(movie);
 
             // add frequent renter points
             frequentRenterPoints++;
