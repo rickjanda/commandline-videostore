@@ -17,15 +17,8 @@ public class Main {
     }
 
     void run() throws IOException {
-        // read movies from file
-        final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
-        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
-        final List<Movie> movies = new ArrayList<>();
-        while (bufferedReader.ready()) {
-            final String line = bufferedReader.readLine();
-            final Movie movie = Movie.parseFrom(line);
-            movies.add(movie);
-        }
+        final List<Movie> movies = loadMoviesFromFile();
+
         // output movie list
         for (int movieNumber = 0; movieNumber < movies.size(); ++movieNumber) {
             final Movie movie = movies.get(movieNumber);
@@ -82,6 +75,19 @@ public class Main {
         result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points\n";
 
         out.print(result);
+    }
+
+    private List<Movie> loadMoviesFromFile() throws IOException {
+        // read movies from file
+        final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
+        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
+        final List<Movie> movies = new ArrayList<>();
+        while (bufferedReader.ready()) {
+            final String line = bufferedReader.readLine();
+            final Movie movie = Movie.parseFrom(line);
+            movies.add(movie);
+        }
+        return movies;
     }
 
 }
