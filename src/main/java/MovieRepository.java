@@ -8,7 +8,7 @@ import java.util.List;
 public class MovieRepository {
 
 
-    static List<Movie> getAllMovies() throws IOException {
+    public List<Movie> getAllMovies() throws IOException {
         // read movies from file
         final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));

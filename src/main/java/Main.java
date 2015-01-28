@@ -16,7 +16,7 @@ public class Main {
     }
 
     void run() throws IOException {
-        final List<Movie> movies = MovieRepository.getAllMovies();
+        final List<Movie> movies = new MovieRepository().getAllMovies();
 
         // output movie list
         for (int movieNumber = 0; movieNumber < movies.size(); ++movieNumber) {
