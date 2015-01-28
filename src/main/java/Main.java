@@ -24,9 +24,9 @@ public class Main {
         int movieNumber = 0;
         while (bufferedReader.ready()) {
             final String line = bufferedReader.readLine();
-            final String[] movie = line.split(";");
-            movies.add(new Movie(movie[0], movie[1]));
-            out.print(movieNumber + ": " + movie[0] + "\n");
+            final Movie movie = Movie.parseFrom(line);
+            movies.add(movie);
+            out.print(movieNumber + ": " + movie.getTitle() + "\n");
             movieNumber++;
         }
 
@@ -82,4 +82,5 @@ public class Main {
 
         out.print(result);
     }
+
 }
