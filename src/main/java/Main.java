@@ -44,8 +44,7 @@ public class Main {
             if (input.isEmpty()) {
                 break;
             }
-            final String[] rentalTokens = input.split(" ");
-            final Rental rental = new Rental(Integer.parseInt(rentalTokens[0]), Integer.parseInt(rentalTokens[1]));
+            final Rental rental = Rental.parseFrom(input);
             final Movie movie = movies.get(rental.getMovieNumber());
             double thisAmount = 0;
 
