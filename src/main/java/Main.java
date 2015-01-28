@@ -42,16 +42,16 @@ public class Main {
             rentals.add(rental);
         }
 
-
         // output and total amount
         double totalAmount = 0;
+        for (Rental rental : rentals) {
+            totalAmount += rental.calcAmount();
+        }
+
         String result = "Rental Record for " + customerName + "\n";
         for (Rental rental : rentals) {
-            final double thisAmount = rental.calcAmount();
-
             // show figures for this rental
-            result += "\t" + rental.getMovie().getTitle() + "\t" + thisAmount + "\n";
-            totalAmount += thisAmount;
+            result += "\t" + rental.getMovie().getTitle() + "\t" + rental.calcAmount() + "\n";
         }
 
         // calculate frequent renter points
