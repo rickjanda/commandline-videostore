@@ -31,6 +31,7 @@ public class Main {
 
         out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
 
+        // parse rentals from input
         final List<Rental> rentals = new ArrayList<>();
         while (true) {
             String input = inputStreamReader.readLine();
@@ -41,27 +42,27 @@ public class Main {
             rentals.add(rental);
         }
 
+
+        // output and total amount
         double totalAmount = 0;
-        int frequentRenterPoints = 0;
         String result = "Rental Record for " + customerName + "\n";
         for (Rental rental : rentals) {
-            final Movie movie = rental.getMovie();
             final double thisAmount = rental.calcAmount();
 
+            // show figures for this rental
+            result += "\t" + rental.getMovie().getTitle() + "\t" + thisAmount + "\n";
+            totalAmount += thisAmount;
+        }
+
+        // calculate frequent renter points
+        int frequentRenterPoints = 0;
+        for (Rental rental : rentals) {
             // add frequent renter points
             frequentRenterPoints++;
             // add bonus for a two day new release rental
-            if (movie.getType().equals("NEW_RELEASE") && rental.getDaysRented() > 1) {
+            if (rental.getMovie().getType().equals("NEW_RELEASE") && rental.getDaysRented() > 1) {
                 frequentRenterPoints++;
             }
-            // show figures for this rental
-            result += "\t" + movie.getTitle() + "\t" + thisAmount + "\n";
-            totalAmount += thisAmount;
-
-        }
-
-        for (Rental rental : rentals) {
-
         }
 
         // add footer lines
