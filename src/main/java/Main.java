@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -32,12 +34,14 @@ public class Main {
         double totalAmount = 0;
         int frequentRenterPoints = 0;
         String result = "Rental Record for " + customerName + "\n";
+        final List<Rental> rentals = new ArrayList<>();
         while (true) {
             String input = inputStreamReader.readLine();
             if (input.isEmpty()) {
                 break;
             }
             final Rental rental = rentalFactory.createFrom(input);
+            rentals.add(rental);
             final Movie movie = rental.getMovie();
             final double thisAmount = rental.calcAmount();
 
@@ -50,6 +54,12 @@ public class Main {
             // show figures for this rental
             result += "\t" + movie.getTitle() + "\t" + thisAmount + "\n";
             totalAmount += thisAmount;
+        }
+        for (Rental rental : rentals) {
+
+        }
+        for (Rental rental : rentals) {
+
         }
 
         // add footer lines
