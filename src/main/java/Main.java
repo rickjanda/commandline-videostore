@@ -21,15 +21,16 @@ public class Main {
         final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
         final List<Movie> movies = new ArrayList<>();
-        int movieNumber = 0;
         while (bufferedReader.ready()) {
             final String line = bufferedReader.readLine();
             final Movie movie = Movie.parseFrom(line);
             movies.add(movie);
-            out.print(movieNumber + ": " + movie.getTitle() + "\n");
-            movieNumber++;
         }
-
+        // output movie list
+        for (int movieNumber = 0; movieNumber < movies.size(); ++movieNumber) {
+            final Movie movie = movies.get(movieNumber);
+            out.print(movieNumber + ": " + movie.getTitle() + "\n");
+        }
         final BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(in));
         out.print("Enter customer name: ");
         String customerName = inputStreamReader.readLine();
