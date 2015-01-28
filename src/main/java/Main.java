@@ -24,43 +24,49 @@ public class Main {
 
         outputMovieList();
 
-        out.print("Enter customer name: ");
-        String customerName = in.readLine();
-
-        out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
+        final String customerName = inputCustomerName();
         final List<Rental> rentals = inputRentals();
-        Customer customer = new Customer(customerName, rentals);
+        final Customer customer = new Customer(customerName, rentals);
 
-        String result = "Rental Record for " + customer.getName() + "\n";
-        for (Rental rental : rentals) {
-            // show figures for this rental
-            result += "\t" + rental.getMovie().getTitle() + "\t" + rental.calcAmount() + "\n";
-        }
-
-        // add footer lines
-        result += "You owed " + customer.getTotalAmount() + "\n";
-        result += "You earned " + customer.getFrequentRenterPoints() + " frequent renter points\n";
-
-        out.print(result);
+        outputRentalRecord(rentals, customer);
+        outputFooter(customer);
     }
 
-    private void outputMovieList() {
-        for (Movie movie : movies.getAllMovies()) {
-            out.print(movie.getNumber() + ": " + movie.getTitle() + "\n");
+    private void outputFooter(Customer customer) {
+        out.print("You owed " + customer.getTotalAmount() + "\n");
+        out.print("You earned " + customer.getFrequentRenterPoints() + " frequent renter points\n");
+    }
+
+    private void outputRentalRecord(List<Rental> rentals, Customer customer) {
+        out.print("Rental Record for " + customer.getName() + "\n");
+        for (Rental rental : rentals) {
+            // show figures for this rental
+            out.print("\t" + rental.getMovie().getTitle() + "\t" + rental.calcAmount() + "\n");
         }
     }
 
     private List<Rental> inputRentals() throws IOException {
+        out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
         final List<Rental> rentals = new ArrayList<>();
         while (true) {
             String input = in.readLine();
             if (input.isEmpty()) {
                 break;
             }
-            final Rental rental = rentalFactory.createFrom(input);
-            rentals.add(rental);
+            rentals.add(rentalFactory.createFrom(input));
         }
         return rentals;
+    }
+
+    private String inputCustomerName() throws IOException {
+        out.print("Enter customer name: ");
+        return in.readLine();
+    }
+
+    private void outputMovieList() {
+        for (Movie movie : movies.getAllMovies()) {
+            out.print(movie.getNumber() + ": " + movie.getTitle() + "\n");
+        }
     }
 
 }
