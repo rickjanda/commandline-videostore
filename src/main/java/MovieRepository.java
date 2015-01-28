@@ -7,23 +7,25 @@ import java.util.List;
 
 public class MovieRepository {
 
-
     private final List<Movie> movies;
 
     public MovieRepository() throws IOException {
         movies = new ArrayList<>();
         final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
+        int number = 0;
         while (bufferedReader.ready()) {
             final String line = bufferedReader.readLine();
             final String[] movie1 = line.split(";");
-            final Movie movie = new Movie(movie1[0], movie1[1]);
+            final String title = movie1[0];
+            final String type = movie1[1];
+            final Movie movie = new Movie(title, type, number);
             movies.add(movie);
+            number ++;
         }
     }
 
     public List<Movie> getAllMovies() {
-        // read movies from file
         return movies;
     }
 

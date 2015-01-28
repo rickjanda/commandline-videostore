@@ -1,11 +1,13 @@
 public class Movie {
     private final String title;
     private final String type;
+    private final int number;
 
-    public Movie(String title, String type) {
+    public Movie(String title, String type, int number) {
 
         this.title = title;
         this.type = type;
+        this.number = number;
     }
 
     public String getTitle() {
@@ -16,4 +18,7 @@ public class Movie {
         return type;
     }
 
+    public int getNumber() {
+        return number;
+    }
 }
