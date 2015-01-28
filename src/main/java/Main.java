@@ -16,6 +16,7 @@ public class Main {
 
     void run() throws IOException {
         final MovieRepository movies = new MovieRepository();
+        final RentalFactory rentalFactory = new RentalFactory(movies);
 
         // output movie list
         for (Movie movie : movies.getAllMovies()) {
