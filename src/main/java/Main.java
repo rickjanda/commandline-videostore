@@ -20,12 +20,12 @@ public class Main {
         // read movies from file
         final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
-        final List<String[]> movies = new ArrayList<>();
+        final List<Movie> movies = new ArrayList<>();
         int movieNumber = 0;
         while (bufferedReader.ready()) {
             final String line = bufferedReader.readLine();
             final String[] movie = line.split(";");
-            movies.add(movie);
+            movies.add(new Movie(movie[0], movie[1]));
             out.print(movieNumber + ": " + movie[0] + "\n");
             movieNumber++;
         }
@@ -45,12 +45,12 @@ public class Main {
                 break;
             }
             final String[] rental = input.split(" ");
-            final String[] movie = movies.get(Integer.parseInt(rental[0]));
+            final Movie movie = movies.get(Integer.parseInt(rental[0]));
             double thisAmount = 0;
 
             int daysRented = Integer.parseInt(rental[1]);
             //determine amounts for rental
-            switch (movie[1]) {
+            switch (movie.getType()) {
                 case "REGULAR":
                     thisAmount += 2;
                     if (daysRented > 2)
@@ -69,11 +69,11 @@ public class Main {
             // add frequent renter points
             frequentRenterPoints++;
             // add bonus for a two day new release rental
-            if (movie[1].equals("NEW_RELEASE") && daysRented > 1) {
+            if (movie.getType().equals("NEW_RELEASE") && daysRented > 1) {
                 frequentRenterPoints++;
             }
             // show figures for this rental
-            result += "\t" + movie[0] + "\t" + thisAmount + "\n";
+            result += "\t" + movie.getTitle() + "\t" + thisAmount + "\n";
             totalAmount += thisAmount;
         }
 
