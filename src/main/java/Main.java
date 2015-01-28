@@ -38,8 +38,8 @@ public class Main {
                 break;
             }
             final Rental rental = rentalFactory.createFrom(input);
-            final Movie movie = movies.getMovieBy(rental.getMovieNumber());
-            final double thisAmount = rental.calcAmount(movie);
+            final Movie movie = rental.getMovie();
+            final double thisAmount = rental.calcAmount();
 
             // add frequent renter points
             frequentRenterPoints++;

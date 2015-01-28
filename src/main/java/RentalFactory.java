@@ -11,6 +11,8 @@ public class RentalFactory {
         final String[] rentalTokens = input.split(" ");
         final int movieNumber = Integer.parseInt(rentalTokens[0]);
         final int daysRented = Integer.parseInt(rentalTokens[1]);
-        return new Rental(movieNumber, daysRented);
+        final Movie movie = movies.getMovieBy(movieNumber);
+
+        return new Rental(daysRented, movie);
     }
 }
