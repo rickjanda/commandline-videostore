@@ -4,30 +4,31 @@ import java.util.List;
 
 public class Main {
 
-    private final InputStream in;
     private final PrintStream out;
+    private final MovieRepository movies;
+    private final RentalFactory rentalFactory;
+    private final BufferedReader in;
 
     public static void main(String[] args) throws IOException {
         new Main(System.in, System.out);
     }
 
-    public Main(InputStream in, PrintStream out) {
-        this.in = in;
+    public Main(InputStream in, PrintStream out) throws IOException {
         this.out = out;
+        movies = new MovieRepository();
+        rentalFactory = new RentalFactory(movies);
+        this.in = new BufferedReader(new InputStreamReader(in));
     }
 
     void run() throws IOException {
-        final MovieRepository movies = new MovieRepository();
-        final RentalFactory rentalFactory = new RentalFactory(movies);
 
-        outputMovieList(movies);
+        outputMovieList();
 
-        final BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(in));
         out.print("Enter customer name: ");
-        String customerName = inputStreamReader.readLine();
+        String customerName = in.readLine();
 
         out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
-        final List<Rental> rentals = inputRentals(rentalFactory, inputStreamReader);
+        final List<Rental> rentals = inputRentals();
         Customer customer = new Customer(customerName, rentals);
 
         String result = "Rental Record for " + customer.getName() + "\n";
@@ -43,16 +44,16 @@ public class Main {
         out.print(result);
     }
 
-    private void outputMovieList(MovieRepository movies) {
+    private void outputMovieList() {
         for (Movie movie : movies.getAllMovies()) {
             out.print(movie.getNumber() + ": " + movie.getTitle() + "\n");
         }
     }
 
-    private List<Rental> inputRentals(RentalFactory rentalFactory, BufferedReader inputStreamReader) throws IOException {
+    private List<Rental> inputRentals() throws IOException {
         final List<Rental> rentals = new ArrayList<>();
         while (true) {
-            String input = inputStreamReader.readLine();
+            String input = in.readLine();
             if (input.isEmpty()) {
                 break;
             }
