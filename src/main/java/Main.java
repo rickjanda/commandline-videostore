@@ -25,13 +25,10 @@ public class Main {
         final BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(in));
         out.print("Enter customer name: ");
         String customerName = inputStreamReader.readLine();
-        Customer customer = new Customer(customerName);
 
         out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
         final List<Rental> rentals = inputRentals(rentalFactory, inputStreamReader);
-
-        double totalAmount = getTotalAmount(rentals);
-        int frequentRenterPoints = getFrequentRenterPoints(rentals);
+        Customer customer = new Customer(customerName, rentals);
 
         String result = "Rental Record for " + customer.getName() + "\n";
         for (Rental rental : rentals) {
@@ -40,8 +37,8 @@ public class Main {
         }
 
         // add footer lines
-        result += "You owed " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points\n";
+        result += "You owed " + customer.getTotalAmount() + "\n";
+        result += "You earned " + customer.getFrequentRenterPoints() + " frequent renter points\n";
 
         out.print(result);
     }
@@ -50,27 +47,6 @@ public class Main {
         for (Movie movie : movies.getAllMovies()) {
             out.print(movie.getNumber() + ": " + movie.getTitle() + "\n");
         }
-    }
-
-    private int getFrequentRenterPoints(List<Rental> rentals) {
-        int frequentRenterPoints = 0;
-        for (Rental rental : rentals) {
-            // add frequent renter points
-            frequentRenterPoints++;
-            // add bonus for a two day new release rental
-            if (rental.getMovie().getType().equals("NEW_RELEASE") && rental.getDaysRented() > 1) {
-                frequentRenterPoints++;
-            }
-        }
-        return frequentRenterPoints;
-    }
-
-    private double getTotalAmount(List<Rental> rentals) {
-        double totalAmount = 0;
-        for (Rental rental : rentals) {
-            totalAmount += rental.calcAmount();
-        }
-        return totalAmount;
     }
 
     private List<Rental> inputRentals(RentalFactory rentalFactory, BufferedReader inputStreamReader) throws IOException {
