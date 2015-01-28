@@ -25,4 +25,12 @@ public class MovieRepository {
         // read movies from file
         return movies;
     }
+
+    public Movie getMovieBy(int movieNumber) {
+        return movies.get(movieNumber);
+    }
+
+    public int count() {
+        return movies.size();
+    }
 }
