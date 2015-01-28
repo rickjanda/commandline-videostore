@@ -19,9 +19,8 @@ public class Main {
         final MovieRepository movies = new MovieRepository();
 
         // output movie list
-        for (int movieNumber = 0; movieNumber < movies.count(); ++movieNumber) {
-            final Movie movie = movies.getMovieBy(movieNumber);
-            out.print(movieNumber + ": " + movie.getTitle() + "\n");
+        for (Movie movie : movies.getAllMovies()) {
+            out.print(movie.getNumber() + ": " + movie.getTitle() + "\n");
         }
 
         final BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(in));
