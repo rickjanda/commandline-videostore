@@ -33,7 +33,4 @@ public class MovieRepository {
         return movies.get(movieNumber);
     }
 
-    public int count() {
-        return movies.size();
-    }
 }
