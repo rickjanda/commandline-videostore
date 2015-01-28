@@ -31,22 +31,10 @@ public class Main {
 
         out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
 
-        // parse rentals from input
-        final List<Rental> rentals = new ArrayList<>();
-        while (true) {
-            String input = inputStreamReader.readLine();
-            if (input.isEmpty()) {
-                break;
-            }
-            final Rental rental = rentalFactory.createFrom(input);
-            rentals.add(rental);
-        }
+        final List<Rental> rentals = inputRentals(rentalFactory, inputStreamReader);
 
-        // output and total amount
-        double totalAmount = 0;
-        for (Rental rental : rentals) {
-            totalAmount += rental.calcAmount();
-        }
+        double totalAmount = getTotalAmount(rentals);
+        int frequentRenterPoints = getFrequentRenterPoints(rentals);
 
         String result = "Rental Record for " + customerName + "\n";
         for (Rental rental : rentals) {
@@ -54,7 +42,14 @@ public class Main {
             result += "\t" + rental.getMovie().getTitle() + "\t" + rental.calcAmount() + "\n";
         }
 
-        // calculate frequent renter points
+        // add footer lines
+        result += "You owed " + String.valueOf(totalAmount) + "\n";
+        result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points\n";
+
+        out.print(result);
+    }
+
+    private int getFrequentRenterPoints(List<Rental> rentals) {
         int frequentRenterPoints = 0;
         for (Rental rental : rentals) {
             // add frequent renter points
@@ -64,12 +59,28 @@ public class Main {
                 frequentRenterPoints++;
             }
         }
+        return frequentRenterPoints;
+    }
 
-        // add footer lines
-        result += "You owed " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points\n";
+    private double getTotalAmount(List<Rental> rentals) {
+        double totalAmount = 0;
+        for (Rental rental : rentals) {
+            totalAmount += rental.calcAmount();
+        }
+        return totalAmount;
+    }
 
-        out.print(result);
+    private List<Rental> inputRentals(RentalFactory rentalFactory, BufferedReader inputStreamReader) throws IOException {
+        final List<Rental> rentals = new ArrayList<>();
+        while (true) {
+            String input = inputStreamReader.readLine();
+            if (input.isEmpty()) {
+                break;
+            }
+            final Rental rental = rentalFactory.createFrom(input);
+            rentals.add(rental);
+        }
+        return rentals;
     }
 
 }
