@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -17,13 +16,14 @@ public class Main {
     }
 
     void run() throws IOException {
-        final List<Movie> movies = loadMoviesFromFile();
+        final List<Movie> movies = MovieRepository.getAllMovies();
 
         // output movie list
         for (int movieNumber = 0; movieNumber < movies.size(); ++movieNumber) {
             final Movie movie = movies.get(movieNumber);
             out.print(movieNumber + ": " + movie.getTitle() + "\n");
         }
+
         final BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(in));
         out.print("Enter customer name: ");
         String customerName = inputStreamReader.readLine();
@@ -75,19 +75,6 @@ public class Main {
         result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points\n";
 
         out.print(result);
-    }
-
-    private List<Movie> loadMoviesFromFile() throws IOException {
-        // read movies from file
-        final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
-        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
-        final List<Movie> movies = new ArrayList<>();
-        while (bufferedReader.ready()) {
-            final String line = bufferedReader.readLine();
-            final Movie movie = Movie.parseFrom(line);
-            movies.add(movie);
-        }
-        return movies;
     }
 
 }
