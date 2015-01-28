@@ -37,7 +37,7 @@ public class Main {
             if (input.isEmpty()) {
                 break;
             }
-            final Rental rental = Rental.parseFrom(input);
+            final Rental rental = rentalFactory.createFrom(input);
             final Movie movie = movies.getMovieBy(rental.getMovieNumber());
             final double thisAmount = rental.calcAmount(movie);
 
