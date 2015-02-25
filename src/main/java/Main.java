@@ -8,7 +8,7 @@ public class Main {
     private final PrintStream out;
 
     public static void main(String[] args) throws IOException {
-        new Main(System.in, System.out);
+        new Main(System.in, System.out).run();
     }
 
     public Main(InputStream in, PrintStream out) {
