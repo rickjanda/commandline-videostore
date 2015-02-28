@@ -14,6 +14,10 @@ public class Customer {
         return name;
     }
 
+    public List<Rental> getRentals() {
+        return rentals;
+    }
+
     public double getTotalAmount() {
         double totalAmount = 0;
         for (Rental rental : this.rentals) {
