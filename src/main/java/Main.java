@@ -21,13 +21,11 @@ public class Main {
         final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
         final List<String[]> movies = new ArrayList<>();
-        int movieNumber = 0;
         while (bufferedReader.ready()) {
             final String line = bufferedReader.readLine();
             final String[] movie = line.split(";");
             movies.add(movie);
-            out.print(movieNumber + ": " + movie[0] + "\n");
-            movieNumber++;
+            out.print(movie[0] + ": " + movie[1] + "\n");
         }
 
         final BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(in));
@@ -50,7 +48,7 @@ public class Main {
 
             int daysRented = Integer.parseInt(rental[1]);
             //determine amounts for rental
-            switch (movie[1]) {
+            switch (movie[2]) {
                 case "REGULAR":
                     thisAmount += 2;
                     if (daysRented > 2)
@@ -69,11 +67,11 @@ public class Main {
             // add frequent renter points
             frequentRenterPoints++;
             // add bonus for a two day new release rental
-            if (movie[1].equals("NEW_RELEASE") && daysRented > 1) {
+            if (movie[2].equals("NEW_RELEASE") && daysRented > 1) {
                 frequentRenterPoints++;
             }
             // show figures for this rental
-            result += "\t" + movie[0] + "\t" + thisAmount + "\n";
+            result += "\t" + movie[1] + "\t" + thisAmount + "\n";
             totalAmount += thisAmount;
         }
 
