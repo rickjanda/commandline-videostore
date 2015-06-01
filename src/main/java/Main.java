@@ -20,12 +20,13 @@ public class Main {
         // read movies from file
         final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
-        final List<String[]> movies = new ArrayList<>();
+        final List<Movie> movies = new ArrayList<>();
         while (bufferedReader.ready()) {
             final String line = bufferedReader.readLine();
-            final String[] movie = line.split(";");
+            final String[] movieData = line.split(";");
+            final Movie movie = new Movie(movieData[0], movieData[1], movieData[2]);
             movies.add(movie);
-            out.print(movie[0] + ": " + movie[1] + "\n");
+            out.print(movie.getId() + ": " + movie.getName() + "\n");
         }
 
         final BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(in));
@@ -43,12 +44,12 @@ public class Main {
                 break;
             }
             final String[] rental = input.split(" ");
-            final String[] movie = movies.get(Integer.parseInt(rental[0]));
+            final Movie movie = movies.get(Integer.parseInt(rental[0]));
             double thisAmount = 0;
 
             int daysRented = Integer.parseInt(rental[1]);
             //determine amounts for rental
-            switch (movie[2]) {
+            switch (movie.getType()) {
                 case "REGULAR":
                     thisAmount += 2;
                     if (daysRented > 2)
@@ -67,11 +68,11 @@ public class Main {
             // add frequent renter points
             frequentRenterPoints++;
             // add bonus for a two day new release rental
-            if (movie[2].equals("NEW_RELEASE") && daysRented > 1) {
+            if (movie.getType().equals("NEW_RELEASE") && daysRented > 1) {
                 frequentRenterPoints++;
             }
             // show figures for this rental
-            result += "\t" + movie[1] + "\t" + thisAmount + "\n";
+            result += "\t" + movie.getName() + "\t" + thisAmount + "\n";
             totalAmount += thisAmount;
         }
 
