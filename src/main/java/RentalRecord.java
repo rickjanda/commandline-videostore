@@ -7,8 +7,9 @@ public class RentalRecord {
 
     private List<Rental> rentals = new ArrayList<>();
 
-    public RentalRecord(String customerName) {
+    public RentalRecord(String customerName, ArrayList<Rental> rentals) {
         this.customerName = customerName;
+        this.rentals = rentals;
     }
 
     public int getFrequentRenterPoints() {

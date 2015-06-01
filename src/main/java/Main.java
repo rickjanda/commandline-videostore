@@ -1,52 +1,34 @@
 import java.io.*;
+import java.util.ArrayList;
 
 public class Main {
 
-    private final InputStream in;
-    private final PrintStream out;
+    private final Console console;
 
     public static void main(String[] args) throws IOException {
         new Main(System.in, System.out).run();
     }
 
     public Main(InputStream in, PrintStream out) {
-        this.in = in;
-        this.out = out;
+        this.console = new Console(in, out);
     }
 
     void run() throws IOException {
         final MovieRepository movieRepository = new MovieRepository();
         final RentalFactory rentalFactory = new RentalFactory(movieRepository);
 
-        for (Movie movie : movieRepository.getAll()) {
-            out.print(movie.getId() + ": " + movie.getName() + "\n");
-        }
+        console.print(movieRepository.getAll());
 
-        final BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(in));
-        out.print("Enter customer name: ");
-        String customerName = inputStreamReader.readLine();
+        String customerName = console.inputCustomerName();
 
-        out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
+        ArrayList<Rental> rentals = console.inputRentals(rentalFactory);
 
-        RentalRecord rentalRecord = new RentalRecord(customerName);
-        while (true) {
-            String input = inputStreamReader.readLine();
-            if (input.isEmpty()) {
-                break;
-            }
-            rentalRecord.add(rentalFactory.createFrom(input));
-        }
+        RentalRecord rentalRecord = new RentalRecord(customerName, rentals);
 
-        String result = "Rental Record for " + rentalRecord.getCustomerName() + "\n";
-        for (Rental rental : rentalRecord.getRentals()) {
-            result += "\t" + rental.getMovieName() + "\t" + rental.getAmount() + "\n";
-        }
+        console.print(rentalRecord);
 
-        // add footer lines
-        result += "You owed " + rentalRecord.getTotalAmount() + "\n";
-        result += "You earned " + rentalRecord.getFrequentRenterPoints() + " frequent renter points\n";
+        console.printFooter(rentalRecord);
 
-        out.print(result);
     }
 
 }
