@@ -16,6 +16,7 @@ public class Main {
 
     void run() throws IOException {
         final MovieRepository movieRepository = new MovieRepository();
+        final RentalFactory rentalFactory = new RentalFactory(movieRepository);
 
         for (Movie movie : movieRepository.getAll()) {
             out.print(movie.getId() + ": " + movie.getName() + "\n");
@@ -35,15 +36,12 @@ public class Main {
             if (input.isEmpty()) {
                 break;
             }
-            final String[] rental = input.split(" ");
+            Rental rental = rentalFactory.createFrom(input);
 
-            int movieId = Integer.parseInt(rental[0]);
-            Rental rental2 = new Rental(movieRepository.getById(movieId), Integer.parseInt(rental[1]));
-
-            frequentRenterPoints += rental2.getFrequentRenterPoints();
+            frequentRenterPoints += rental.getFrequentRenterPoints();
             // show figures for this rental
-            result += "\t" + rental2.getMovieName() + "\t" + rental2.getAmount() + "\n";
-            totalAmount += rental2.getAmount();
+            result += "\t" + rental.getMovieName() + "\t" + rental.getAmount() + "\n";
+            totalAmount += rental.getAmount();
         }
 
         // add footer lines
