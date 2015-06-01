@@ -28,25 +28,23 @@ public class Main {
 
         out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
 
-        double totalAmount = 0;
-        int frequentRenterPoints = 0;
-        String result = "Rental Record for " + customerName + "\n";
+        RentalRecord rentalRecord = new RentalRecord(customerName);
         while (true) {
             String input = inputStreamReader.readLine();
             if (input.isEmpty()) {
                 break;
             }
-            Rental rental = rentalFactory.createFrom(input);
+            rentalRecord.add(rentalFactory.createFrom(input));
+        }
 
-            frequentRenterPoints += rental.getFrequentRenterPoints();
-            // show figures for this rental
+        String result = "Rental Record for " + rentalRecord.getCustomerName() + "\n";
+        for (Rental rental : rentalRecord.getRentals()) {
             result += "\t" + rental.getMovieName() + "\t" + rental.getAmount() + "\n";
-            totalAmount += rental.getAmount();
         }
 
         // add footer lines
-        result += "You owed " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points\n";
+        result += "You owed " + rentalRecord.getTotalAmount() + "\n";
+        result += "You earned " + rentalRecord.getFrequentRenterPoints() + " frequent renter points\n";
 
         out.print(result);
     }
