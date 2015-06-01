@@ -5,10 +5,12 @@ import java.util.List;
 public class Console {
 
     private PrintStream out;
+    private final RentalFactory rentalFactory;
     private BufferedReader inputReader;
 
-    public Console(InputStream in, PrintStream out) {
+    public Console(InputStream in, PrintStream out, RentalFactory rentalFactory) {
         this.out = out;
+        this.rentalFactory = rentalFactory;
         this.inputReader = new BufferedReader(new InputStreamReader(in));
     }
 
@@ -35,7 +37,7 @@ public class Console {
         return inputReader.readLine();
     }
 
-    public ArrayList<Rental> inputRentals(RentalFactory rentalFactory) throws IOException {
+    public ArrayList<Rental> inputRentals() throws IOException {
         out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
 
         ArrayList<Rental> rentals = new ArrayList<>();

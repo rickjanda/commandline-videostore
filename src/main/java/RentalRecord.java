@@ -7,7 +7,7 @@ public class RentalRecord {
 
     private List<Rental> rentals = new ArrayList<>();
 
-    public RentalRecord(String customerName, ArrayList<Rental> rentals) {
+    public RentalRecord(String customerName, List<Rental> rentals) {
         this.customerName = customerName;
         this.rentals = rentals;
     }
