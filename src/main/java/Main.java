@@ -1,6 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 
@@ -17,15 +15,9 @@ public class Main {
     }
 
     void run() throws IOException {
-        // read movies from file
-        final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
-        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
-        final List<Movie> movies = new ArrayList<>();
-        while (bufferedReader.ready()) {
-            final String line = bufferedReader.readLine();
-            final String[] movieData = line.split(";");
-            final Movie movie = new Movie(movieData[0], movieData[1], movieData[2]);
-            movies.add(movie);
+        final MovieRepository movieRepository = new MovieRepository();
+
+        for (Movie movie : movieRepository.getAll()) {
             out.print(movie.getId() + ": " + movie.getName() + "\n");
         }
 
@@ -45,7 +37,8 @@ public class Main {
             }
             final String[] rental = input.split(" ");
 
-            Rental rental2 = new Rental(movies.get(Integer.parseInt(rental[0])), Integer.parseInt(rental[1]));
+            int movieId = Integer.parseInt(rental[0]);
+            Rental rental2 = new Rental(movieRepository.getById(movieId), Integer.parseInt(rental[1]));
 
             frequentRenterPoints += rental2.getFrequentRenterPoints();
             // show figures for this rental
