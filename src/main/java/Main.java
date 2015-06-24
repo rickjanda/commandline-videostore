@@ -1,11 +1,11 @@
 import java.io.*;
-import java.util.Map;
 
 public class Main {
 
     private final InputStream in;
     private final PrintStream out;
     private final MovieRepository movieRepository;
+    private final RentalFactory rentalFactory;
 
     public static void main(String[] args) throws IOException {
         new Main(System.in, System.out).run();
@@ -15,6 +15,7 @@ public class Main {
         this.in = in;
         this.out = out;
         movieRepository = new MovieRepository();
+        rentalFactory = new RentalFactory(movieRepository);
     }
 
     void run() throws IOException {
@@ -37,10 +38,7 @@ public class Main {
             if (input.isEmpty()) {
                 break;
             }
-            final String[] rentalData = input.split(" ");
-            int movieKey = Integer.parseInt(rentalData[0]);
-            final Movie movie = movieRepository.getByKey(movieKey);
-            final Rental rental = new Rental(movie, Integer.parseInt(rentalData[1]));
+            final Rental rental = rentalFactory.createFrom(input);
 
             frequentRenterPoints += rental.getFrequentRenterPoints();
             // show figures for this rental
