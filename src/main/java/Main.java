@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -30,20 +32,13 @@ public class Main {
 
         out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
 
-        double totalAmount = 0;
-        int frequentRenterPoints = 0;
-        String result = "Rental Record for " + customerName + "\n";
-        while (true) {
-            String input = inputStreamReader.readLine();
-            if (input.isEmpty()) {
-                break;
-            }
-            final Rental rental = rentalFactory.createFrom(input);
+        List<Rental> rentals = inputRentals(inputStreamReader);
+        int frequentRenterPoints = getFrequentRenterPoints(rentals);
+        double totalAmount = getTotalAmount(rentals);
 
-            frequentRenterPoints += rental.getFrequentRenterPoints();
-            // show figures for this rental
+        String result = "Rental Record for " + customerName + "\n";
+        for (Rental rental : rentals) {
             result += "\t" + rental.getMovieName() + "\t" + rental.getAmount() + "\n";
-            totalAmount += rental.getAmount();
         }
 
         // add footer lines
@@ -51,6 +46,36 @@ public class Main {
         result += "You earned " + frequentRenterPoints + " frequent renter points\n";
 
         out.print(result);
+    }
+
+    private double getTotalAmount(List<Rental> rentals) {
+        double totalAmount = 0;
+        for (Rental rental : rentals) {
+            totalAmount += rental.getAmount();
+        }
+        return totalAmount;
+    }
+
+    private int getFrequentRenterPoints(List<Rental> rentals) {
+        int frequentRenterPoints = 0;
+        for (Rental rental : rentals) {
+            frequentRenterPoints += rental.getFrequentRenterPoints();
+            // show figures for this rental
+        }
+        return frequentRenterPoints;
+    }
+
+    private List<Rental> inputRentals(BufferedReader inputStreamReader) throws IOException {
+        List<Rental> rentals = new ArrayList<>();
+        while (true) {
+            String input = inputStreamReader.readLine();
+            if (input.isEmpty()) {
+                break;
+            }
+            final Rental rental = rentalFactory.createFrom(input);
+            rentals.add(rental);
+        }
+        return rentals;
     }
 
 }
