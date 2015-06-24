@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -20,11 +22,11 @@ public class Main {
         // read movies from file
         final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
-        final List<String[]> movies = new ArrayList<>();
+        final Map<Integer, String[]> movies = new HashMap<>();
         while (bufferedReader.ready()) {
             final String line = bufferedReader.readLine();
             final String[] movie = line.split(";");
-            movies.add(movie);
+            movies.put(Integer.parseInt(movie[0]), movie);
             out.print(movie[0] + ": " + movie[1] + "\n");
         }
 
