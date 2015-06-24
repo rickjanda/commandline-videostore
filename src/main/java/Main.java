@@ -33,36 +33,18 @@ public class Main {
         out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
 
         List<Rental> rentals = inputRentals(inputStreamReader);
-        int frequentRenterPoints = getFrequentRenterPoints(rentals);
-        double totalAmount = getTotalAmount(rentals);
+        RentalRecord rentalRecord = new RentalRecord(rentals, customerName);
 
-        String result = "Rental Record for " + customerName + "\n";
-        for (Rental rental : rentals) {
+        String result = "Rental Record for " + rentalRecord.getCustomerName() + "\n";
+        for (Rental rental : rentalRecord.getRentals()) {
             result += "\t" + rental.getMovieName() + "\t" + rental.getAmount() + "\n";
         }
 
         // add footer lines
-        result += "You owed " + totalAmount + "\n";
-        result += "You earned " + frequentRenterPoints + " frequent renter points\n";
+        result += "You owed " + rentalRecord.getTotalAmount() + "\n";
+        result += "You earned " + rentalRecord.getFrequentRenterPoints() + " frequent renter points\n";
 
         out.print(result);
-    }
-
-    private double getTotalAmount(List<Rental> rentals) {
-        double totalAmount = 0;
-        for (Rental rental : rentals) {
-            totalAmount += rental.getAmount();
-        }
-        return totalAmount;
-    }
-
-    private int getFrequentRenterPoints(List<Rental> rentals) {
-        int frequentRenterPoints = 0;
-        for (Rental rental : rentals) {
-            frequentRenterPoints += rental.getFrequentRenterPoints();
-            // show figures for this rental
-        }
-        return frequentRenterPoints;
     }
 
     private List<Rental> inputRentals(BufferedReader inputStreamReader) throws IOException {
