@@ -1,63 +1,32 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    private final InputStream in;
-    private final PrintStream out;
     private final MovieRepository movieRepository;
-    private final RentalFactory rentalFactory;
+    private final Console console;
 
     public static void main(String[] args) throws IOException {
         new Main(System.in, System.out).run();
     }
 
     public Main(InputStream in, PrintStream out) throws IOException {
-        this.in = in;
-        this.out = out;
         movieRepository = new MovieRepository();
-        rentalFactory = new RentalFactory(movieRepository);
+        RentalFactory rentalFactory = new RentalFactory(movieRepository);
+        console = new Console(in, out, rentalFactory);
     }
 
     void run() throws IOException {
 
-        for (Movie movie : movieRepository.getAllMovies()) {
-            out.print(movie.getKey() + ": " + movie.getName() + "\n");
-        }
+        console.printMovies(movieRepository.getAllMovies());
 
-        final BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(in));
-        out.print("Enter customer name: ");
-        String customerName = inputStreamReader.readLine();
+        String customerName = console.inputCustomerName();
 
-        out.print("Choose movie by number followed by rental days, just ENTER for bill:\n");
-
-        List<Rental> rentals = inputRentals(inputStreamReader);
+        List<Rental> rentals = console.inputRentals();
         RentalRecord rentalRecord = new RentalRecord(rentals, customerName);
 
-        String result = "Rental Record for " + rentalRecord.getCustomerName() + "\n";
-        for (Rental rental : rentalRecord.getRentals()) {
-            result += "\t" + rental.getMovieName() + "\t" + rental.getAmount() + "\n";
-        }
-
-        // add footer lines
-        result += "You owed " + rentalRecord.getTotalAmount() + "\n";
-        result += "You earned " + rentalRecord.getFrequentRenterPoints() + " frequent renter points\n";
-
-        out.print(result);
-    }
-
-    private List<Rental> inputRentals(BufferedReader inputStreamReader) throws IOException {
-        List<Rental> rentals = new ArrayList<>();
-        while (true) {
-            String input = inputStreamReader.readLine();
-            if (input.isEmpty()) {
-                break;
-            }
-            final Rental rental = rentalFactory.createFrom(input);
-            rentals.add(rental);
-        }
-        return rentals;
+        console.printRentalRecord(rentalRecord, this);
+        console.printFooter(rentalRecord, this);
     }
 
 }
