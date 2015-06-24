@@ -1,7 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Main {
@@ -22,12 +20,13 @@ public class Main {
         // read movies from file
         final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
-        final Map<Integer, String[]> movies = new HashMap<>();
+        final Map<Integer, Movie> movies = new HashMap<>();
         while (bufferedReader.ready()) {
             final String line = bufferedReader.readLine();
-            final String[] movie = line.split(";");
-            movies.put(Integer.parseInt(movie[0]), movie);
-            out.print(movie[0] + ": " + movie[1] + "\n");
+            final String[] movieData = line.split(";");
+            Movie movie = new Movie(Integer.parseInt(movieData[0]), movieData[1], movieData[2]);
+            movies.put(movie.getKey(), movie);
+            out.print(movie.getKey() + ": " + movie.getName() + "\n");
         }
 
         final BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(in));
@@ -45,12 +44,12 @@ public class Main {
                 break;
             }
             final String[] rental = input.split(" ");
-            final String[] movie = movies.get(Integer.parseInt(rental[0]));
+            final Movie movie2 = movies.get(Integer.parseInt(rental[0]));
             double thisAmount = 0;
 
             int daysRented = Integer.parseInt(rental[1]);
             //determine amounts for rental
-            switch (movie[2]) {
+            switch (movie2.getCategory()) {
                 case "REGULAR":
                     thisAmount += 2;
                     if (daysRented > 2)
@@ -69,17 +68,17 @@ public class Main {
             // add frequent renter points
             frequentRenterPoints++;
             // add bonus for a two day new release rental
-            if (movie[2].equals("NEW_RELEASE") && daysRented > 1) {
+            if (movie2.getCategory().equals("NEW_RELEASE") && daysRented > 1) {
                 frequentRenterPoints++;
             }
             // show figures for this rental
-            result += "\t" + movie[1] + "\t" + thisAmount + "\n";
+            result += "\t" + movie2.getName() + "\t" + thisAmount + "\n";
             totalAmount += thisAmount;
         }
 
         // add footer lines
-        result += "You owed " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points\n";
+        result += "You owed " + totalAmount + "\n";
+        result += "You earned " + frequentRenterPoints + " frequent renter points\n";
 
         out.print(result);
     }
