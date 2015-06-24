@@ -1,31 +1,25 @@
 import java.io.*;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
 
     private final InputStream in;
     private final PrintStream out;
+    private final MovieRepository movieRepository;
 
     public static void main(String[] args) throws IOException {
         new Main(System.in, System.out).run();
     }
 
-    public Main(InputStream in, PrintStream out) {
+    public Main(InputStream in, PrintStream out) throws IOException {
         this.in = in;
         this.out = out;
+        movieRepository = new MovieRepository();
     }
 
     void run() throws IOException {
-        // read movies from file
-        final InputStream movieStream = Main.class.getResourceAsStream("/movies.cvs");
-        final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(movieStream));
-        final Map<Integer, Movie> movies = new HashMap<>();
-        while (bufferedReader.ready()) {
-            final String line = bufferedReader.readLine();
-            final String[] movieData = line.split(";");
-            Movie movie = new Movie(Integer.parseInt(movieData[0]), movieData[1], movieData[2]);
-            movies.put(movie.getKey(), movie);
+
+        for (Movie movie : movieRepository.getAllMovies()) {
             out.print(movie.getKey() + ": " + movie.getName() + "\n");
         }
 
@@ -44,7 +38,8 @@ public class Main {
                 break;
             }
             final String[] rentalData = input.split(" ");
-            final Movie movie = movies.get(Integer.parseInt(rentalData[0]));
+            int movieKey = Integer.parseInt(rentalData[0]);
+            final Movie movie = movieRepository.getByKey(movieKey);
             final Rental rental = new Rental(movie, Integer.parseInt(rentalData[1]));
 
             frequentRenterPoints += rental.getFrequentRenterPoints();
