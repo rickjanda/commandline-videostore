@@ -44,12 +44,12 @@ public class Main {
                 break;
             }
             final String[] rental = input.split(" ");
-            final Movie movie2 = movies.get(Integer.parseInt(rental[0]));
+            final Movie movie = movies.get(Integer.parseInt(rental[0]));
             double thisAmount = 0;
 
             int daysRented = Integer.parseInt(rental[1]);
             //determine amounts for rental
-            switch (movie2.getCategory()) {
+            switch (movie.getCategory()) {
                 case "REGULAR":
                     thisAmount += 2;
                     if (daysRented > 2)
@@ -68,11 +68,11 @@ public class Main {
             // add frequent renter points
             frequentRenterPoints++;
             // add bonus for a two day new release rental
-            if (movie2.getCategory().equals("NEW_RELEASE") && daysRented > 1) {
+            if (movie.getCategory().equals("NEW_RELEASE") && daysRented > 1) {
                 frequentRenterPoints++;
             }
             // show figures for this rental
-            result += "\t" + movie2.getName() + "\t" + thisAmount + "\n";
+            result += "\t" + movie.getName() + "\t" + thisAmount + "\n";
             totalAmount += thisAmount;
         }
 
