@@ -25,8 +25,8 @@ public class Main {
         List<Rental> rentals = console.inputRentals();
         RentalRecord rentalRecord = new RentalRecord(rentals, customerName);
 
-        console.printRentalRecord(rentalRecord, this);
-        console.printFooter(rentalRecord, this);
+        console.printRentalRecord(rentalRecord);
+        console.printFooter(rentalRecord);
     }
 
 }
