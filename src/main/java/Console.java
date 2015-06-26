@@ -40,13 +40,13 @@ public class Console {
         return inputStreamReader.readLine();
     }
 
-    public void printFooter(RentalRecord rentalRecord, Main main) {
+    public void printFooter(RentalRecord rentalRecord) {
         // add footer lines
         out.print("You owed " + rentalRecord.getTotalAmount() + "\n");
         out.print("You earned " + rentalRecord.getFrequentRenterPoints() + " frequent renter points\n");
     }
 
-    public void printRentalRecord(RentalRecord rentalRecord, Main main) {
+    public void printRentalRecord(RentalRecord rentalRecord) {
         out.print("Rental Record for " + rentalRecord.getCustomerName() + "\n");
         for (Rental rental : rentalRecord.getRentals()) {
             out.print("\t" + rental.getMovieName() + "\t" + rental.getAmount() + "\n");
