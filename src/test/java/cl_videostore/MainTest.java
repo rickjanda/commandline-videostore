@@ -1,3 +1,5 @@
+package cl_videostore;
+
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
