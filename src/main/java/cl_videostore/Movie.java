@@ -1,3 +1,5 @@
+package cl_videostore;
+
 public class Movie {
     private final int key;
     private final String name;

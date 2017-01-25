@@ -1,3 +1,5 @@
+package cl_videostore;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,7 @@ public class Main {
         int frequentRenterPoints = getFrequentRenterPoints(rentals);
         double totalAmount = getTotalAmount(rentals);
 
-        String result = "Rental Record for " + customerName + "\n";
+        String result = "cl_videostore.Rental Record for " + customerName + "\n";
         for (Rental rental : rentals) {
             result += "\t" + rental.getMovieName() + "\t" + rental.getAmount() + "\n";
         }

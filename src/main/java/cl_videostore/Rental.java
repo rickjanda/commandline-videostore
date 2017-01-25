@@ -1,3 +1,5 @@
+package cl_videostore;
+
 public class Rental {
     private Movie movie;
     private int daysRented;
