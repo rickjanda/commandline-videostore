@@ -1,3 +1,5 @@
+package cl_videostore;
+
 import java.io.*;
 import java.util.List;
 

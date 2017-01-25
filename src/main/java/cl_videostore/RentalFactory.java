@@ -1,3 +1,5 @@
+package cl_videostore;
+
 public class RentalFactory {
     private MovieRepository movieRepository;
 

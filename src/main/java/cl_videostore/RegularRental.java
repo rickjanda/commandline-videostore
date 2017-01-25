@@ -1,3 +1,5 @@
+package cl_videostore;
+
 public class RegularRental extends Rental {
     public RegularRental(Movie movie, int daysRented) {
         super(movie, daysRented);

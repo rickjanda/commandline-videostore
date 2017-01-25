@@ -1,3 +1,5 @@
+package cl_videostore;
+
 public class ChildrensRental extends Rental {
 
     public ChildrensRental(Movie movie, int daysRented) {

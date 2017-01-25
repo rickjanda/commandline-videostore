@@ -1,3 +1,5 @@
+package cl_videostore;
+
 public abstract class Rental {
     Movie movie;
     int daysRented;
