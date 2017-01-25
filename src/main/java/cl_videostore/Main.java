@@ -1,5 +1,6 @@
+package cl_videostore;
+
 import java.io.*;
-import java.util.Map;
 
 public class Main {
 
@@ -31,7 +32,7 @@ public class Main {
 
         double totalAmount = 0;
         int frequentRenterPoints = 0;
-        String result = "Rental Record for " + customerName + "\n";
+        String result = "cl_videostore.Rental Record for " + customerName + "\n";
         while (true) {
             String input = inputStreamReader.readLine();
             if (input.isEmpty()) {
