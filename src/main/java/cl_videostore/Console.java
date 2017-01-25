@@ -1,3 +1,5 @@
+package cl_videostore;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,7 +49,7 @@ public class Console {
     }
 
     public void printRentalRecord(RentalRecord rentalRecord) {
-        out.print("Rental Record for " + rentalRecord.getCustomerName() + "\n");
+        out.print("cl_videostore.Rental Record for " + rentalRecord.getCustomerName() + "\n");
         for (Rental rental : rentalRecord.getRentals()) {
             out.print("\t" + rental.getMovieName() + "\t" + rental.getAmount() + "\n");
         }
