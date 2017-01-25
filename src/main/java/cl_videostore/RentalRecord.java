@@ -1,3 +1,5 @@
+package cl_videostore;
+
 import java.util.List;
 
 public class RentalRecord {

@@ -1,3 +1,5 @@
+package cl_videostore;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class Main {
         List<Rental> rentals = inputRentals(inputStreamReader);
         RentalRecord rentalRecord = new RentalRecord(rentals, customerName);
 
-        String result = "Rental Record for " + rentalRecord.getCustomerName() + "\n";
+        String result = "cl_videostore.Rental Record for " + rentalRecord.getCustomerName() + "\n";
         for (Rental rental : rentalRecord.getRentals()) {
             result += "\t" + rental.getMovieName() + "\t" + rental.getAmount() + "\n";
         }
